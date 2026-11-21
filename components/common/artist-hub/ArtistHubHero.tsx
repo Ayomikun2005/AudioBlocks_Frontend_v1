@@ -63,7 +63,13 @@ const ArtistHubHero = () => {
       {/* Hero Image at Center */}
       <div className="relative z-10 mt-12 flex justify-center">
         <div className="relative w-[1145px] h-[494px]">
-          <Image fill alt="Hero Image" className="object-contain" src="/artist_hub/HeroImage.png" />
+          <Image
+            fill
+            sizes="(max-width: 1145px) 100vw, 1145px"
+            alt="Hero Image"
+            className="object-contain"
+            src="/artist_hub/HeroImage.png"
+          />
         </div>
       </div>
     </section>

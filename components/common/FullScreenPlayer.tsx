@@ -155,11 +155,7 @@ export const FullScreenPlayer = ({
         if (info.offset.y > 100) handleClose();
       }}
     >
-      <button
-        className="absolute top-4 right-4 text-white p-2"
-        type="button"
-        onClick={handleClose}
-      >
+      <button className="absolute top-4 right-4 text-white p-2" type="button" onClick={handleClose}>
         Close
       </button>
 
@@ -210,6 +206,7 @@ export const FullScreenPlayer = ({
       <div className="w-64 h-64 relative rounded-md mb-8 overflow-hidden bg-gray-800">
         <Image
           fill
+          sizes="(max-width: 768px) 80vw, 256px"
           alt={title ?? 'Now playing'}
           className="object-cover"
           src={cover || COVER_FALLBACK}

@@ -204,6 +204,7 @@ export function SearchOverlay() {
                       <div className="relative w-9 h-9 rounded overflow-hidden shrink-0 bg-gray-900">
                         <Image
                           fill
+                          sizes="36px"
                           alt={result.title}
                           className="object-cover"
                           src={result.image || '/placeholder.svg'}

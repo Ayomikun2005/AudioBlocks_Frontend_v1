@@ -23,6 +23,7 @@ export default function EmbedSongPage({ params }: { params: Promise<{ id: string
               alt="Song artwork"
               className="w-full h-full object-cover"
               fill
+              sizes="100vw"
               src="/audio.jpg"
             />
           </div>
@@ -37,9 +38,7 @@ export default function EmbedSongPage({ params }: { params: Promise<{ id: string
               <Player />
             </div>
 
-            <div className="text-xs text-gray-500 text-center">
-              Powered by AudioBlocks
-            </div>
+            <div className="text-xs text-gray-500 text-center">Powered by AudioBlocks</div>
           </div>
         </div>
       </div>

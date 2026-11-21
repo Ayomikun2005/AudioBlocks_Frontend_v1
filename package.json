@@ -13,7 +13,8 @@
     "test:coverage": "vitest run --coverage",
     "format": "prettier --write .",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "lighthouse": "npx --yes @lhci/cli@0.14.x autorun"
   },
   "dependencies": {
     "@creit.tech/stellar-wallets-kit": "^2.7.1",

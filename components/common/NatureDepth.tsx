@@ -117,6 +117,7 @@ export default function NatureDepthSlider({
       <div className="relative min-h-[420px]">
         <Image
           fill
+          sizes="100vw"
           alt={slide.title}
           className="object-cover"
           priority={currentIndex === 0}

@@ -59,6 +59,7 @@ const CategorySection = memo(function CategorySection({ activeGenre = 'All' }: P
               >
                 <Image
                   fill
+                  sizes="(max-width: 768px) 50vw, 240px"
                   alt={category.name}
                   className="object-cover transition group-hover:scale-105"
                   src={category.image}

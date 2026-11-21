@@ -7,6 +7,7 @@ import {
   type NormalizationGraph,
 } from '@/lib/player/audioGraph';
 import { resolveStreamUrl } from '@/lib/player/streamUrl';
+import { markPlaybackRequested, markPlaybackStarted } from '@/lib/performance/timeToFirstAudio';
 import { useCrossfade } from './useCrossfade';
 import type { Track } from '@/context/PlaybackContext';
 
@@ -121,11 +122,27 @@ export function useAudioEngine({
     if (crossfadeActiveRef.current) cleanupIncoming();
   }, [currentIndex, currentTrack, addToRecentlyPlayed, crossfadeActiveRef, cleanupIncoming]);
 
+  // PERF-02: the first `playing` event after a request is the first audible
+  // frame. Anything else — autoplay resume, a crossfade handoff — reports no
+  // sample, because there was no request to measure from.
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const onPlaying = () => {
+      markPlaybackStarted();
+    };
+    audio.addEventListener('playing', onPlaying);
+    return () => audio.removeEventListener('playing', onPlaying);
+  }, [audioRef, currentIndex]);
+
   // currentIndex re-syncs play state on track change.
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
     if (isPlaying) {
+      // PERF-02: the clock starts at the user's request, not at the network
+      // response, so buffering is part of what is measured.
+      markPlaybackRequested();
       audio.play().catch((err: unknown) => {
         if (err instanceof DOMException && err.name === 'NotAllowedError') {
           setAutoplayBlocked(true);

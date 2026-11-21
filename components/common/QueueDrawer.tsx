@@ -158,6 +158,7 @@ export function QueueDrawer({ open, onOpenChange }: QueueDrawerProps) {
                   <div className="relative w-10 h-10 rounded overflow-hidden shrink-0">
                     <Image
                       fill
+                      sizes="40px"
                       alt={track.title}
                       className="object-cover"
                       src={track.cover || '/placeholder-cover.svg'}

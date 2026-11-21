@@ -9,6 +9,7 @@ const Hero = () => {
         <div className="absolute right-50 top-2 bg-[#490D3E80] opacity- rounded-full w-100 h-100 blur-[100px]" />
         <Image
           fill
+          sizes="100vw"
           priority
           alt="Featured content"
           className="object-cover z-20"

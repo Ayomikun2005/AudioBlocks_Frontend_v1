@@ -1,0 +1,54 @@
+name: lighthouse
+
+# PERF-01: the perf budgets in .lighthouserc.js, asserted on every pull request
+# that touches the app. `size-limit` already caps the JavaScript; this measures
+# what the browser does with it.
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lighthouse-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  budgets:
+    name: Lighthouse budgets
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci --legacy-peer-deps
+
+      - name: Build
+        # The public pages are built statically; these values only have to be
+        # syntactically valid for the build to run.
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:3000
+          NEXT_PUBLIC_API_BASE_URL: http://localhost:3000
+        run: npm run build
+
+      - name: Run Lighthouse CI
+        # Pinned so a new major cannot change the scores under us. The version
+        # matches .lighthouserc.js's schema.
+        run: npx --yes @lhci/cli@0.14.x autorun
+
+      - name: Keep the report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: .lighthouseci
+          if-no-files-found: ignore
+          retention-days: 14

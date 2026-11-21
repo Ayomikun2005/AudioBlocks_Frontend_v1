@@ -26,6 +26,7 @@ export const NowPlayingInfo = memo(function NowPlayingInfo({
       <div className="h-12 w-12 relative shrink-0">
         <Image
           fill
+          sizes="48px"
           alt={track?.title ?? 'Now playing'}
           className="rounded-md object-cover"
           src={coverSrc}
